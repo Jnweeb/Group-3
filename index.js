@@ -1,38 +1,78 @@
+
 import express from 'express';
-
-let students = [{id: 1, name: "student1"}];
-
 const app = express();
+
+let students = [
+    { id: 1, name: "student1" }
+];
 
 app.use(express.json());
 
-app.get("/students", (req, res) => {
-    res.send(students);
+
+
+app.get("/students", (request, response) => {
+    response.send(students);
 });
 
-app.post("/students", (req, res) =>{
-    const newStudent = req.body;
+
+
+app.post("/students", (request, response) => {
+    const newStudent = {
+        id: students.length + 1,
+        name: request.body.name
+    };
 
     students = [...students, newStudent];
 
-    res.send(newStudent);
+    response.send(newStudent);
 });
-app.patch("/students/:id", (req, res) => {
-    const id = Number(req.params.id);
-    const updatedStudentData = req.body;
+
+
+app.patch("/students/:id", (request, response) => {
+    const studentId = Number(request.params.id);
+    const updatedStudentData = request.body;
+
+    const student = students.find(
+        (student) => student.id === studentId
+    );
+
 
     students = students.map((student) => {
-        if (student.id === id) {
-            return { ...student, ...updatedStudentData };
+        if (student.id === studentId) {
+            return {
+                ...student,
+                ...updatedStudentData
+            };
         }
+
         return student;
     });
 
-    const updatedStudent = students.find((student) => student.id === id);
+    const updatedStudent = students.find(
+        (student) => student.id === studentId
+    );
 
-    res.send(updatedStudent);
+    response.send(updatedStudent);
 });
 
+
+
+app.delete("/students/:id", (request, response) => {
+    const studentId = Number(request.params.id);
+
+    const student = students.find(
+        (student) => student.id === studentId
+    );
+
+
+    students = students.filter(
+        (student) => student.id !== studentId
+    );
+
+
+});
+
+
 app.listen(3000, () => {
-    console.log("listening to port 3000");
+    console.log("listening to Port 3000");
 });
