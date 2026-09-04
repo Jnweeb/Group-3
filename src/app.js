@@ -1,4 +1,3 @@
-
 import express from 'express';
 const app = express();
 
@@ -72,7 +71,4 @@ app.delete("/students/:id", (request, response) => {
 
 });
 
-
-app.listen(3000, () => {
-    console.log("listening to Port 3000");
-});
+export default app;
