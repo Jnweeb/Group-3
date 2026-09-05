@@ -1,83 +1,12 @@
-import express from 'express';
+import express from "express";
+
+import studentRoutes from "./routes/studentRoutes.js";
+
 const app = express();
-
-
-app.get("/", (req, res) => {
-    res.status(200).send("ROOT WORKS");
-});
-
-app.get("/test", (req, res) => {
-    res.status(200).send("TEST WORKS");
-});
-
-let students = [
-    { id: 1, name: "student1" }
-];
 
 app.use(express.json());
 
-
-
-app.get("/students", (request, response) => {
-    response.send(students);
-});
-
-
-
-app.post("/students", (request, response) => {
-    const newStudent = {
-        id: students.length + 1,
-        name: request.body.name
-    };
-
-    students = [...students, newStudent];
-
-    response.send(newStudent);
-});
-
-
-app.patch("/students/:id", (request, response) => {
-    const studentId = Number(request.params.id);
-    const updatedStudentData = request.body;
-
-    const student = students.find(
-        (student) => student.id === studentId
-    );
-
-
-    students = students.map((student) => {
-        if (student.id === studentId) {
-            return {
-                ...student,
-                ...updatedStudentData
-            };
-        }
-
-        return student;
-    });
-
-    const updatedStudent = students.find(
-        (student) => student.id === studentId
-    );
-
-    response.send(updatedStudent);
-});
-
-
-
-app.delete("/students/:id", (request, response) => {
-    const studentId = Number(request.params.id);
-
-    const student = students.find(
-        (student) => student.id === studentId
-    );
-
-
-    students = students.filter(
-        (student) => student.id !== studentId
-    );
-
-
-});
+//route for students
+app.use("/api/students", studentRoutes);
 
 export default app;
