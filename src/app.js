@@ -1,6 +1,15 @@
 import express from 'express';
 const app = express();
 
+
+app.get("/", (req, res) => {
+    res.status(200).send("ROOT WORKS");
+});
+
+app.get("/test", (req, res) => {
+    res.status(200).send("TEST WORKS");
+});
+
 let students = [
     { id: 1, name: "student1" }
 ];
