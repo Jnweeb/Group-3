@@ -1,33 +1,35 @@
-import { 
+import {
     findAllStudents,
-    findStudentById, 
-    createStudent, 
-    updateStudent, 
-    deleteStudent 
-}from "../models/studentModel.js";
+    findStudentById,
+    createStudent,
+    updateStudent,
+    deleteStudent
+} from "../models/studentModel.js";
 
-export const getAllStudents = () => {
-    return findAllStudents();
+export const getAllStudents = async () => {
+    return await findAllStudents();
 };
 
-export const addStudent = (studentData) => {
-    return createStudent(studentData);
+export const addStudent = async (studentData) => {
+    return await createStudent(studentData);
 };
 
-export const editStudent = (studentId, studentData) => {
-    const student = findStudentById(studentId); 
+export const editStudent = async (studentId, studentData) => {
+    const student = await findStudentById(studentId);
 
-    if(!student) {
-        return null;
-    }   
-    return updateStudent(studentId, studentData);
-};
-
-export const removeStudent = (studentId) => {
-    const student = findStudentById(studentId);
-
-    if(!student) {
+    if (!student) {
         return null;
     }
-    return deleteStudent(studentId);
+
+    return await updateStudent(studentId, studentData);
+};
+
+export const removeStudent = async (studentId) => {
+    const student = await findStudentById(studentId);
+
+    if (!student) {
+        return null;
+    }
+
+    return await deleteStudent(studentId);
 };

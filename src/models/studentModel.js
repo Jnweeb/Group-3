@@ -1,47 +1,56 @@
+import dbCon from "../config/database.js";
 
+export const findAllStudents = async () => {
+    const result = await dbCon.query(
+        `SELECT id, user_id, name, created_at
+         FROM students
+         ORDER BY id`
+    );
 
-let students = [
-    {
-        id: 1, 
-        name: "student1" 
-    }
-];
-
-export const findAllStudents = () => {
-    return students;
+    return result.rows;
 };
 
-export const findStudentById = (studentId) => {
-    return students.find(student => student.id === studentId);
+export const findStudentById = async (studentId) => {
+    const result = await dbCon.query(
+        `SELECT id, user_id, name, created_at
+         FROM students
+         WHERE id = $1`,
+        [studentId]
+    );
+
+    return result.rows[0];
 };
 
-export const createStudent = (studentData) => {
-    const newStudent = {
-        id: students.length + 1,
-        name: studentData.name
-    };
-    students.push(newStudent);
-    return newStudent;
+export const createStudent = async (studentData) => {
+    const result = await dbCon.query(
+        `INSERT INTO students (name)
+         VALUES ($1)
+         RETURNING id, user_id, name, created_at`,
+        [studentData.name]
+    );
+
+    return result.rows[0];
 };
 
-export const updateStudent = (studentId, studentData) => {
-    students = students.map(student => {
-        if(student.id === studentId) {
-            return {
-                ...student,
-                ...studentData
-            };
-        }
-        return student;
-    });
-    return findStudentById(studentId);
+export const updateStudent = async (studentId, studentData) => {
+    const result = await dbCon.query(
+        `UPDATE students
+         SET name = $1
+         WHERE id = $2
+         RETURNING id, user_id, name, created_at`,
+        [studentData.name, studentId]
+    );
+
+    return result.rows[0];
 };
 
-export const deleteStudent = (studentId) => {
-    const student = findStudentById(studentId);
+export const deleteStudent = async (studentId) => {
+    const result = await dbCon.query(
+        `DELETE FROM students
+         WHERE id = $1
+         RETURNING id, user_id, name, created_at`,
+        [studentId]
+    );
 
-    students = students.filter(student => student.id !== studentId);
-
-    return student;
+    return result.rows[0];
 };
-

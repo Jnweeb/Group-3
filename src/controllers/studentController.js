@@ -3,37 +3,85 @@ import {
     addStudent,
     editStudent,
     removeStudent
-}from "../services/studentService.js";
+} from "../services/studentService.js";
 
-export const getStudents = (request, response) => {
-    const students = getAllStudents();
+export const getStudents = async (request, response) => {
+    try {
+        const students = await getAllStudents();
 
-    response.status(200).send(students);
-};
+        response.status(200).send(students);
 
-export const createStudent = (request, response) => {
-    const newStudent = addStudent(request.body);
+    } catch (error) {
+        console.error(error);
 
-    response.status(201).send(newStudent);
-};
-
-export const updateStudent = (request, response) => {
-    const studentId = Number(request.params.id);
-
-    const updatedStudent = editStudent(studentId, request.body);
-
-    if(!updatedStudent) {
-        return response.status(404).send({ message: "Student not found" });
+        response.status(500).send({
+            message: "Server error"
+        });
     }
-    response.status(200).send(updatedStudent);
 };
 
-export const deleteStudent = (request, response) => {
-    const studentId = Number(request.params.id);
+export const createStudent = async (request, response) => {
+    try {
+        const newStudent = await addStudent(request.body);
 
-    const deletedStudent = removeStudent(studentId);
+        response.status(201).send(newStudent);
 
-    if(!deletedStudent) {return response.status(404).send({ message: "Student not found" });
+    } catch (error) {
+        console.error(error);
+
+        response.status(500).send({
+            message: "Server error"
+        });
     }
-    response.status(200).send({ message: "Student deleted successfully" });
+};
+
+export const updateStudent = async (request, response) => {
+    try {
+        const studentId = Number(request.params.id);
+
+        const updatedStudent = await editStudent(
+            studentId,
+            request.body
+        );
+
+        if (!updatedStudent) {
+            return response.status(404).send({
+                message: "Student not found"
+            });
+        }
+
+        response.status(200).send(updatedStudent);
+
+    } catch (error) {
+        console.error(error);
+
+        response.status(500).send({
+            message: "Server error"
+        });
+    }
+};
+
+export const deleteStudent = async (request, response) => {
+    try {
+        const studentId = Number(request.params.id);
+
+        const deletedStudent = await removeStudent(studentId);
+
+        if (!deletedStudent) {
+            return response.status(404).send({
+                message: "Student not found"
+            });
+        }
+
+        response.status(200).send({
+            message: "Student deleted successfully"
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        response.status(500).send({
+            message: "Server error"
+        });
+    }
 };

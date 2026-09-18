@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Group 3 - Dashboard</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <header class="dashboard-header">
+
+            <div>
+                <h1>Group 3</h1>
+                <p>Student Management System</p>
+            </div>
+
+            <button id="logoutButton" class="logout-button">
+                Logout
+            </button>
+
+        </header>
+
+        <main class="dashboard-content">
+
+            <section class="welcome-card">
+
+                <h2>
+                    Welcome, <span id="userName"></span>
+                </h2>
+
+                <p>
+                    Role:
+                    <strong id="userRole"></strong>
+                </p>
+
+            </section>
+
+            <section class="students-section">
+
+                <div class="section-header">
+
+                    <h2>Students</h2>
+
+                    <button
+                        id="addStudentButton"
+                        style="display: none;"
+                    >
+                        Add Student
+                    </button>
+
+                </div>
+
+                <div id="studentMessage"></div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Created</th>
+                                <th id="actionsHeader" style="display: none;">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="studentsTableBody">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="/js/dashboard.js"></script>
+
+</body>
+</html>
