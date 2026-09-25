@@ -34,11 +34,9 @@ loginForm.addEventListener("submit", async (event) => {
             return;
         }
 
-        // Save authentication information
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
 
-        // Go to dashboard
         window.location.href = "/dashboard.html";
 
     } catch (error) {

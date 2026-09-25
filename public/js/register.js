@@ -5,9 +5,20 @@ registerForm.addEventListener("submit", async (event) => {
 
     event.preventDefault();
 
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    const studentNumber =
+        document.getElementById("studentNumber").value.trim();
+
+    const name =
+        document.getElementById("name").value.trim();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const age =
+        Number(document.getElementById("age").value);
+
+    const course =
+        document.getElementById("course").value.trim();
 
     message.textContent = "Creating account...";
 
@@ -21,9 +32,11 @@ registerForm.addEventListener("submit", async (event) => {
             },
 
             body: JSON.stringify({
+                studentNumber,
                 name,
                 email,
-                password
+                age,
+                course
             })
         });
 
@@ -36,12 +49,17 @@ registerForm.addEventListener("submit", async (event) => {
             return;
         }
 
-        message.textContent =
-            "Registration successful! Redirecting to login...";
+        message.innerHTML = `
+            Registration successful!<br>
+            Your initial password is:
+            <strong>${data.initialPassword}</strong>
+            <br><br>
+            Redirecting to login...
+        `;
 
         setTimeout(() => {
             window.location.href = "/";
-        }, 1500);
+        }, 4000);
 
     } catch (error) {
 

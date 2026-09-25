@@ -1,10 +1,23 @@
 export const validateRegister = (req, res, next) => {
-    const { name, email, password } = req.body;
+    const {
+        studentNumber,
+        name,
+        email,
+        age,
+        course
+    } = req.body;
 
-    if (!name || !email || !password) {
+    if (!studentNumber || !name || !email || age === undefined || !course) {
         return res.status(400).json({
             success: false,
-            message: 'Name, email, and password are required'
+            message: 'Student number, name, email, age, and course are required'
+        });
+    }
+
+    if (!/^\d{2}-\d{5}$/.test(studentNumber)) {
+        return res.status(400).json({
+            success: false,
+            message: 'Student number must follow the format XX-XXXXX'
         });
     }
 
@@ -22,10 +35,17 @@ export const validateRegister = (req, res, next) => {
         });
     }
 
-    if (password.length < 6) {
+    if (!Number.isInteger(age) || age <= 0) {
         return res.status(400).json({
             success: false,
-            message: 'Password must be at least 6 characters'
+            message: 'Age must be a positive integer'
+        });
+    }
+
+    if (course.trim() === '') {
+        return res.status(400).json({
+            success: false,
+            message: 'Course is required'
         });
     }
 

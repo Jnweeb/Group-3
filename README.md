@@ -181,9 +181,13 @@ Request body:
 
 ```json
 {
-  "name": "John Smith Updated"
+  "name": "John Smith Updated",
+  "age": 21,
+  "course": "BS Information Technology"
 }
 ```
+
+The `name`, `age`, and `course` fields are required. `age` must be a positive integer. The current database update implementation changes the student's name; `age` and `course` are currently validated by the route but are not persisted.
 
 ### Example request with cURL
 

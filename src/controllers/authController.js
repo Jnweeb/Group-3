@@ -6,18 +6,28 @@ import {
 
 export const register = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
-
-        const user = await registerUser(
+        const {
+            studentNumber,
             name,
             email,
-            password
+            age,
+            course
+        } = req.body;
+
+        const result = await registerUser(
+            studentNumber,
+            name,
+            email,
+            age,
+            course
         );
 
         res.status(201).json({
             success: true,
-            message: 'Registration successful',
-            user
+            message: 'Student registration successful',
+            user: result.user,
+            student: result.student,
+            initialPassword: result.initialPassword
         });
 
     } catch (error) {
