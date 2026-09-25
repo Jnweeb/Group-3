@@ -167,11 +167,41 @@ Request body:
 
 ```json
 {
-  "name": "John Smith"
+  "studentNumber": "23-12345",
+  "name": "John Smith",
+  "email": "john@example.com",
+  "age": 20,
+  "course": "BS Computer Science"
 }
 ```
 
-The `name` field is required and cannot be blank.
+All fields are required. The student number must follow the `XX-XXXXX` format, the name must contain at least 2 characters, the email must contain `@`, and age must be a positive integer.
+
+The response includes the created user, student record, and generated initial password. The initial password should be handled securely.
+
+```json
+{
+  "success": true,
+  "message": "Student account created successfully",
+  "user": {
+    "id": 2,
+    "name": "John Smith",
+    "email": "john@example.com",
+    "role": "student",
+    "created_at": "2026-09-25T12:00:00.000Z"
+  },
+  "student": {
+    "id": 1,
+    "user_id": 2,
+    "student_number": "23-12345",
+    "name": "John Smith",
+    "age": 20,
+    "course": "BS Computer Science",
+    "created_at": "2026-09-25T12:00:00.000Z"
+  },
+  "initialPassword": "<generated-password>"
+}
+```
 
 ### Update a student
 
@@ -187,7 +217,7 @@ Request body:
 }
 ```
 
-The `name`, `age`, and `course` fields are required. `age` must be a positive integer. The current database update implementation changes the student's name; `age` and `course` are currently validated by the route but are not persisted.
+The `name`, `age`, and `course` fields are required. `age` must be a positive integer.
 
 ### Example request with cURL
 

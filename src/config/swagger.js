@@ -42,8 +42,41 @@ const options = {
                     properties: {
                         id: { type: 'integer', example: 1 },
                         user_id: { type: 'integer', nullable: true, example: null },
+                        student_number: { type: 'string', example: '23-12345' },
                         name: { type: 'string', example: 'John Smith' },
+                        age: { type: 'integer', minimum: 1, example: 20 },
+                        course: { type: 'string', example: 'BS Computer Science' },
                         created_at: { type: 'string', format: 'date-time' }
+                    }
+                },
+                StudentCreate: {
+                    type: 'object',
+                    required: ['studentNumber', 'name', 'email', 'age', 'course'],
+                    properties: {
+                        studentNumber: { type: 'string', pattern: '^\\d{2}-\\d{5}$', example: '23-12345' },
+                        name: { type: 'string', minLength: 2, example: 'John Smith' },
+                        email: { type: 'string', format: 'email', example: 'john@example.com' },
+                        age: { type: 'integer', minimum: 1, example: 20 },
+                        course: { type: 'string', example: 'BS Computer Science' }
+                    }
+                },
+                StudentUpdate: {
+                    type: 'object',
+                    required: ['name', 'age', 'course'],
+                    properties: {
+                        name: { type: 'string', minLength: 2, example: 'John Smith Updated' },
+                        age: { type: 'integer', minimum: 1, example: 21 },
+                        course: { type: 'string', example: 'BS Information Technology' }
+                    }
+                },
+                StudentCreateResponse: {
+                    type: 'object',
+                    properties: {
+                        success: { type: 'boolean', example: true },
+                        message: { type: 'string', example: 'Student account created successfully' },
+                        user: { $ref: '#/components/schemas/User' },
+                        student: { $ref: '#/components/schemas/Student' },
+                        initialPassword: { type: 'string', example: 'John@2345' }
                     }
                 },
                 Error: {

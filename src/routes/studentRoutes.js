@@ -73,20 +73,14 @@ router.get(
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - name
- *             properties:
- *               name:
- *                 type: string
- *                 example: Juan Dela Cruz
+ *             $ref: '#/components/schemas/StudentCreate'
  *     responses:
  *       201:
  *         description: Student created successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Student'
+ *               $ref: '#/components/schemas/StudentCreateResponse'
  *       400:
  *         description: Invalid student information
  *       401:
@@ -125,25 +119,23 @@ router.post(
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - name
- *               - age
- *               - course
- *             properties:
- *               name:
- *                 type: string
- *                 example: Juan Dela Cruz
- *               age:
- *                 type: integer
- *                 minimum: 1
- *                 example: 21
- *               course:
- *                 type: string
- *                 example: BS Information Technology
+ *             $ref: '#/components/schemas/StudentUpdate'
  *     responses:
  *       200:
  *         description: Student updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Student updated successfully
+ *                 student:
+ *                   $ref: '#/components/schemas/Student'
  *       400:
  *         description: Invalid student information
  *       401:
