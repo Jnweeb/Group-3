@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 
 import authRoutes from "./routes/authRoutes.js";
 import studentRoutes from "./routes/studentRoutes.js";
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger.js";
@@ -29,5 +30,9 @@ app.use("/api/auth", authRoutes);
 
 // Student routes
 app.use("/api/students", studentRoutes);
+
+// Handle unmatched routes and errors after all other middleware and routes.
+app.use(notFound);
+app.use(errorHandler);
 
 export default app;
